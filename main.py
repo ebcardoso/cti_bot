@@ -25,8 +25,6 @@ def start(msg:telebot.types.Message):
             driver = webdriver.Chrome()
             driver.get("https://suap.ifrn.edu.br/accounts/login/")
 
-            print("chegou aqui")
-
             # Preenche os campos do login
             driver.find_element(By.NAME, "username").send_keys(username)
             driver.find_element(By.NAME, "password").send_keys(password)
@@ -36,7 +34,7 @@ def start(msg:telebot.types.Message):
             # Clica no botão de login
             btn = driver.find_element(By.CLASS_NAME, "success")
             btn.click()
-            time.sleep(5)
+            time.sleep(10)
 
             # Acessa a área de chamados
             driver.get("https://suap.ifrn.edu.br/centralservicos/listar_chamados_suporte/")
@@ -47,7 +45,12 @@ def start(msg:telebot.types.Message):
 
             # Obtendo os cards dos chamados
             tickets_scrap = soup.find_all('div', class_='general-box')
-            print("Chamados Analisados: "+tickets_scrap.len())
+
+            # Imprimindo Log
+            try:
+                print("Chamados Analisados: "+str(len(tickets_scrap)))
+            except:
+                print("Chamados Analisados: ")
 
             # Separando os dados dos cards dos chamados
             tickets_list = []
@@ -75,7 +78,12 @@ def start(msg:telebot.types.Message):
 
             for ticket in tickets_list:
                 bot.send_message(msg.chat.id, "⚠️NOVO CHAMADO⚠️"+"\n\n- Tipo: "+ticket["type"]+".\n- Descrição: "+ticket["description"]+"\n\n- Interessado: "+ticket["opener"]+"\n- Data de Abertura: "+ticket["opening_date"]+"\n\n"+ticket["link"])
-            print("Chamados Enviados: "+tickets_list.len())
+
+            # Imprimindo Log
+            try:
+                print("Chamados Enviados: "+str(len(tickets_list)))
+            except:
+                print("Chamados Enviados: ")
 
             print("-----Verificação Concluída")
         except:
