@@ -27,7 +27,7 @@ def date_parser(date_str):
 def should_send_ticket(ticket_date):
     difference = datetime.now() - date_parser(ticket_date)
     minutes = difference.total_seconds() / 60
-    if (minutes <= 10*(6*7)):
+    if (minutes <= 10):
         return(True)
     else:
         return(False)
