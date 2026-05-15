@@ -2,5 +2,5 @@ selenium
 beautifulsoup4
 telebot
 
-python -m venv local_env
+python3 -m venv local_env
 source local_env/bin/activate
