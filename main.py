@@ -4,14 +4,21 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 from date_utils import should_send_ticket
+from op_importar import op_importar
 
 # Carregando as variáveis de ambiente
 env = open('.env', 'r')
 token = env.readline().strip()
 username = env.readline().strip()
 password = env.readline().strip()
+credentials = {
+    "username": username,
+    "password": password
+}
 
+# Criando a instâcia do Bot
 bot = telebot.TeleBot(token)
+print("Bot Iniciado!")
 
 # /start
 @bot.message_handler(['start'])
@@ -90,6 +97,11 @@ def start(msg:telebot.types.Message):
             driver.quit()
 
         time.sleep(600) # Nova verificação em 10 minutos
+
+# /importar <numero-do-ticket>
+@bot.message_handler(['importar'])
+def importar(msg:telebot.types.Message):
+    op_importar(bot, msg, credentials)
 
 # /ocupacao
 @bot.message_handler(['ocupacao'])
