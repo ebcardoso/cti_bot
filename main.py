@@ -1,5 +1,6 @@
 import time
 import telebot
+from lib_sql_connection import LibSqlConnection
 from op_chamados import op_chamados
 from op_importar import op_importar
 from op_ocupacao import op_ocupacao
@@ -12,6 +13,9 @@ credentials = {
     "password": env.readline().strip()
 }
 
+# Inicia o banco de dados
+sql_connection = LibSqlConnection()
+
 # Criando a instâcia do Bot
 bot = telebot.TeleBot(token)
 print("Bot Iniciado!")
@@ -19,8 +23,17 @@ print("Bot Iniciado!")
 # /start
 @bot.message_handler(['start'])
 def start(msg:telebot.types.Message):
-    bot.reply_to(msg, "Bem Vindo. Você receberá os novos chamados abertos para a CTI/JC.")
+    bot.reply_to(msg, "Bem Vindo ao bot da CTI/JC.")
 
+    # Armazena o ID do novo usuário
+    try:
+        sql_connection.store_chat_id(msg.chat.id)
+    except Exception as e:
+        print(f"Error: {e}")
+
+# /chamados
+@bot.message_handler(['chamados'])
+def chamados(msg:telebot.types.Message):
     op_chamados(bot, msg, credentials)
 
     while(True):
