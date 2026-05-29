@@ -1,4 +1,4 @@
 .env
 localenv/*
 __pycache__
-.database.db
+database.db

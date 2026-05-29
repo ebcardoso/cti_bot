@@ -15,3 +15,8 @@ class LibSqlConnection:
         if verification is None:
             self._sql.execute("INSERT INTO users(chat_id) VALUES(?)", ([str(chat_id)]))
             self._db.commit()
+
+    # Deleta o chat_id de um usuário que se desinscreveu
+    def delete_chat_id(self, chat_id):
+        self._sql.execute("DELETE FROM users WHERE chat_id = (?)", ([str(chat_id)]))
+        self._db.commit()

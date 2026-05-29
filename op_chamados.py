@@ -2,7 +2,7 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
-from date_utils import should_send_ticket
+from lib_date import should_send_ticket
 
 def op_chamados(bot, msg, credentials):
     print("-----Iniciando Verificacao")

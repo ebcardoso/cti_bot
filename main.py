@@ -31,6 +31,15 @@ def start(msg:telebot.types.Message):
     except Exception as e:
         print(f"Error: {e}")
 
+# /desinscrever
+@bot.message_handler(['desinscrever'])
+def desinscrever(msg:telebot.types.Message):
+    # Deletar o id de quem se desinscreve do bot
+    try:
+        sql_connection.delete_chat_id(msg.chat.id)
+    except Exception as e:
+        print(f"Error: {e}")
+
 # /chamados
 @bot.message_handler(['chamados'])
 def chamados(msg:telebot.types.Message):
