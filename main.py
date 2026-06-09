@@ -1,5 +1,6 @@
 import time
 import telebot
+import threading
 from lib_sql_connection import LibSqlConnection
 from op_chamados import op_chamados
 from op_importar import op_importar
