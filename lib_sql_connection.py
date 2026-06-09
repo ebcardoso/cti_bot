@@ -2,6 +2,7 @@ import sqlite3
 
 class LibSqlConnection:
 
+    # Inicia a instância do Banco de Dados
     def __init__(self):
         self._db = sqlite3.connect('database.db', check_same_thread = False)
         self._sql = self._db.cursor()
@@ -20,3 +21,8 @@ class LibSqlConnection:
     def delete_chat_id(self, chat_id):
         self._sql.execute("DELETE FROM users WHERE chat_id = (?)", ([str(chat_id)]))
         self._db.commit()
+
+    # Retorna a lista com o ID de todos os usuários cadastrados no bot
+    def get_chat_id_list(self):
+        list_chat_id = self._sql.execute("SELECT chat_id FROM users")
+        return [row[0] for row in list_chat_id.fetchall()]

@@ -1,6 +1,0 @@
-selenium
-beautifulsoup4
-telebot
-
-python3 -m venv local_env
-source local_env/bin/activate

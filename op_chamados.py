@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 from lib_date import should_send_ticket
 
-def op_chamados(bot, msg, credentials):
+def op_chamados(bot, chat_id_list, credentials):
     print("-----Iniciando Verificacao")
     driver = webdriver.Chrome()
 
@@ -62,7 +62,8 @@ def op_chamados(bot, msg, credentials):
                 })
 
         for ticket in tickets_list:
-            bot.send_message(msg.chat.id, "⚠️NOVO CHAMADO⚠️"+"\n\n- Tipo: "+ticket["type"]+".\n- Descrição: "+ticket["description"]+"\n\n- Interessado: "+ticket["opener"]+"\n- Data de Abertura: "+ticket["opening_date"]+"\n\n"+ticket["link"])
+            for chat_id in chat_id_list:
+                bot.send_message(chat_id, "⚠️NOVO CHAMADO⚠️"+"\n\n- Tipo: "+ticket["type"]+".\n- Descrição: "+ticket["description"]+"\n\n- Interessado: "+ticket["opener"]+"\n- Data de Abertura: "+ticket["opening_date"]+"\n\n"+ticket["link"])
 
         # Imprimindo Log
         try:
