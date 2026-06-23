@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 
-def op_ocupacao(bot, msg, credentials):
+def op_ocupacao(bot, msg, env_vars):
     message_await = bot.reply_to(msg, "Aguarde enquanto buscamos as informações...")
     print("-----Buscando ocupação do setor")
 
@@ -13,8 +13,8 @@ def op_ocupacao(bot, msg, credentials):
     try:
         driver.get("https://suap.ifrn.edu.br/accounts/login/")
         
-        driver.find_element(By.NAME, "username").send_keys(credentials["username"])
-        driver.find_element(By.NAME, "password").send_keys(credentials["password"])
+        driver.find_element(By.NAME, "username").send_keys(env_vars["username"])
+        driver.find_element(By.NAME, "password").send_keys(env_vars["password"])
 
         time.sleep(1)
 

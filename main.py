@@ -7,8 +7,8 @@ from op_ocupacao import op_ocupacao
 
 # Carregando as variáveis de ambiente
 env = open('.env', 'r')
-token = env.readline().strip()
-credentials = {
+env_vars = {
+    "token": env.readline().strip(),
     "username": env.readline().strip(),
     "password": env.readline().strip()
 }
@@ -17,7 +17,7 @@ credentials = {
 sql_connection = LibSqlConnection()
 
 # Criando a instâcia do Bot
-bot = telebot.TeleBot(token)
+bot = telebot.TeleBot(env_vars["token"])
 print("Bot Iniciado!")
 
 # /start
@@ -43,20 +43,20 @@ def desinscrever(msg:telebot.types.Message):
 # /chamados
 @bot.message_handler(['chamados'])
 def chamados(msg:telebot.types.Message):
-    op_chamados(bot, msg, credentials)
+    op_chamados(bot, msg, env_vars)
 
     while(True):
         time.sleep(600) # Nova verificação em 10 minutos
-        op_chamados(bot, msg, credentials)
+        op_chamados(bot, msg, env_vars)
 
 # /importar <numero-do-ticket>
 @bot.message_handler(['importar'])
 def importar(msg:telebot.types.Message):
-    op_importar(bot, msg, credentials)
+    op_importar(bot, msg, env_vars)
 
 # /ocupacao
 @bot.message_handler(['ocupacao'])
 def ocupacao(msg:telebot.types.Message):
-    op_ocupacao(bot, msg, credentials)
+    op_ocupacao(bot, msg, env_vars)
 
 bot.infinity_polling()

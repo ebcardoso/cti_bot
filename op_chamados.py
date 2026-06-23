@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 from lib_date import should_send_ticket
 
-def op_chamados(bot, msg, credentials):
+def op_chamados(bot, msg, env_vars):
     print("-----Iniciando Verificacao")
     driver = webdriver.Chrome()
 
@@ -13,8 +13,8 @@ def op_chamados(bot, msg, credentials):
         driver.get("https://suap.ifrn.edu.br/accounts/login/")
 
         # Preenche os campos do login
-        driver.find_element(By.NAME, "username").send_keys(credentials["username"])
-        driver.find_element(By.NAME, "password").send_keys(credentials["password"])
+        driver.find_element(By.NAME, "username").send_keys(env_vars["username"])
+        driver.find_element(By.NAME, "password").send_keys(env_vars["password"])
 
         time.sleep(1)
 

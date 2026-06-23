@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 
-def op_importar(bot, msg, credentials):
+def op_importar(bot, msg, env_vars):
     print("-----Iniciando busca do chamado")
 
     # Instância do navegador
@@ -16,8 +16,8 @@ def op_importar(bot, msg, credentials):
         driver.get("https://suap.ifrn.edu.br/accounts/login/")
 
         # Preenche os campos do login
-        driver.find_element(By.NAME, "username").send_keys(credentials["username"])
-        driver.find_element(By.NAME, "password").send_keys(credentials["password"])
+        driver.find_element(By.NAME, "username").send_keys(env_vars["username"])
+        driver.find_element(By.NAME, "password").send_keys(env_vars["password"])
 
         time.sleep(1)
 
