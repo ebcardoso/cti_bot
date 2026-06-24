@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 from lib_date import should_send_ticket
 
-def op_chamados(bot, msg, env_vars):
+def op_chamados(bot, chat_id_list, env_vars):
     print("-----Iniciando Verificacao")
     driver = webdriver.Chrome()
 

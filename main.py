@@ -41,15 +41,6 @@ def desinscrever(msg:telebot.types.Message):
     except Exception as e:
         print(f"Error: {e}")
 
-# /chamados
-@bot.message_handler(['chamados'])
-def chamados(msg:telebot.types.Message):
-    op_chamados(bot, msg, env_vars)
-
-    while(True):
-        time.sleep(600) # Nova verificação em 10 minutos
-        op_chamados(bot, msg, env_vars)
-
 # /importar <numero-do-ticket>
 @bot.message_handler(['importar'])
 def importar(msg:telebot.types.Message):
@@ -60,4 +51,19 @@ def importar(msg:telebot.types.Message):
 def ocupacao(msg:telebot.types.Message):
     op_ocupacao(bot, msg, env_vars)
 
+# Faz a verificação de tickets a cada 10 minutos
+def refresh_new_tickets():
+   while(True):
+       chats_id = sql_connection.get_chat_id_list()
+       op_chamados(bot, chats_id, env_vars)
+       time.sleep(600) # Nova verificação em 10 minutos
+
+# Cria nova thread para fazer a busca de chamados
+thread_refresh = threading.Thread(
+    target=refresh_new_tickets,
+    daemon=True
+)
+thread_refresh.start()
+
+print("Bot Iniciado!")
 bot.infinity_polling()
