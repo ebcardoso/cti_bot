@@ -3,11 +3,11 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 
-def op_importar(bot, msg, env_vars):
+def op_importar(bot, msg, env_vars, chrome_options):
     print("-----Iniciando busca do chamado")
 
     # Instância do navegador
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(options=chrome_options)
 
     try:
         # Extraindo o número do ticket
