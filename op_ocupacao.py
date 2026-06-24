@@ -3,12 +3,12 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 
-def op_ocupacao(bot, msg, env_vars):
+def op_ocupacao(bot, msg, env_vars, chrome_options):
     message_await = bot.reply_to(msg, "Aguarde enquanto buscamos as informações...")
     print("-----Buscando ocupação do setor")
 
     # Instância do navegador
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(options=chrome_options)
 
     try:
         driver.get("https://suap.ifrn.edu.br/accounts/login/")
