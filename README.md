@@ -17,4 +17,4 @@ pip3 install selenium beautifulsoup4 telebot
 # Comandos
 - **/start** - Cadastrar-se no bot.
 - **/desinscrever** - Desinscrever-se do bot.
-- **/importar <id-chamado>** - Importar um chamado a partir do seu ID.
+- **/importar <<id-chamado>>** - Importar um chamado a partir do seu ID.

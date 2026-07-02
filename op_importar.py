@@ -1,4 +1,3 @@
-import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
@@ -8,6 +7,8 @@ def op_importar(bot, msg, env_vars, chrome_options):
 
     # Instância do navegador
     driver = webdriver.Chrome(options=chrome_options)
+    driver.set_page_load_timeout(30)
+    driver.implicitly_wait(10)
 
     try:
         # Extraindo o número do ticket
@@ -19,12 +20,9 @@ def op_importar(bot, msg, env_vars, chrome_options):
         driver.find_element(By.NAME, "username").send_keys(env_vars["username"])
         driver.find_element(By.NAME, "password").send_keys(env_vars["password"])
 
-        time.sleep(1)
-
         # Clica no botão de login
         btn = driver.find_element(By.CLASS_NAME, "success")
         btn.click()
-        time.sleep(4)
 
         # Acessa a página do chamado
         driver.get("https://suap.ifrn.edu.br/centralservicos/chamado/"+ticket_id)
@@ -36,7 +34,7 @@ def op_importar(bot, msg, env_vars, chrome_options):
         ticket = {
             "link": "https://suap.ifrn.edu.br/centralservicos/chamado/"+ticket_id,
         }
-        
+
         #Obtendo o tipo
         ticket_type = soup.find("button", class_="accordion-button").get_text()
         ticket["type"] = ticket_type.lstrip().rstrip()
@@ -45,7 +43,7 @@ def op_importar(bot, msg, env_vars, chrome_options):
         div_description = soup.find("div", class_="flex-basis-100")
         description = div_description.find("dd").get_text()
         ticket["description"] = description
-        
+
         #Obtendo o interessado
         opener = soup.find("a", class_="popup-user-trigger").get_text()
         ticket["opener"] = opener

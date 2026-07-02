@@ -1,4 +1,3 @@
-import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
@@ -7,6 +6,8 @@ from lib_date import should_send_ticket
 def op_chamados(bot, chat_id_list, env_vars, chrome_options):
     print("-----Iniciando Verificacao")
     driver = webdriver.Chrome(options=chrome_options)
+    driver.set_page_load_timeout(30)
+    driver.implicitly_wait(10)
 
     try:
         # Instância do navegador
@@ -16,12 +17,9 @@ def op_chamados(bot, chat_id_list, env_vars, chrome_options):
         driver.find_element(By.NAME, "username").send_keys(env_vars["username"])
         driver.find_element(By.NAME, "password").send_keys(env_vars["password"])
 
-        time.sleep(1)
-
         # Clica no botão de login
         btn = driver.find_element(By.CLASS_NAME, "success")
         btn.click()
-        time.sleep(10)
 
         # Acessa a área de chamados
         driver.get("https://suap.ifrn.edu.br/centralservicos/listar_chamados_suporte/")
@@ -46,7 +44,7 @@ def op_chamados(bot, chat_id_list, env_vars, chrome_options):
             ticket.append("https://suap.ifrn.edu.br"+ts.find('a').get('href'))
             ticket.append(ts.find('strong').get_text())
             ticket.append(ts.find('p').get_text())
-            
+
             for ticket_data in ts.find_all('div', class_='list-item'):
                 ticket.append(ticket_data.find('dd').get_text())
 

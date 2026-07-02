@@ -23,7 +23,8 @@ chrome_options = Options()
 chrome_options.add_argument("headless")
 chrome_options.add_argument("no-sandbox")
 chrome_options.add_argument("disable-dev-shm-usage")
-chrome_options.add_argument("disable-gpu")  
+chrome_options.add_argument("disable-gpu")
+chrome_options.add_argument("disable-software-rasterizer")
 
 # Criando a instâcia do Bot
 bot = telebot.TeleBot(env_vars["token"])
@@ -47,15 +48,6 @@ def desinscrever(msg:telebot.types.Message):
         sql_connection.delete_chat_id(msg.chat.id)
     except Exception as e:
         print(f"Error: {e}")
-
-# /chamados
-@bot.message_handler(['chamados'])
-def chamados(msg:telebot.types.Message):
-    op_chamados(bot, msg, env_vars, chrome_options)
-
-    while(True):
-        time.sleep(600) # Nova verificação em 10 minutos
-        op_chamados(bot, msg, env_vars, chrome_options)
 
 # /importar <numero-do-ticket>
 @bot.message_handler(['importar'])
